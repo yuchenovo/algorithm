@@ -271,7 +271,7 @@ public class algo {
             if (map1.get(entry.getKey()) == null) {
                 flag = false;
                 break;
-            } else if (map1.get(entry.getKey())<(entry.getValue())) {
+            } else if (map1.get(entry.getKey()) < (entry.getValue())) {
                 flag = false;
                 break;
             }
@@ -279,15 +279,81 @@ public class algo {
         return flag;
     }
 
+
+    /**
+     * 268. 丢失的数字
+     *
+     * @param nums 全国矿工工会
+     * @return int
+     */
+    public int missingNumber(int[] nums) {
+        int n = nums.length;
+        int num = 0;
+        for (int i = 0; i <= n ; i++) {
+            num ^= i;
+        }
+        for (int j : nums) {
+            num ^= j;
+        }
+        return num;
+    }
+
+    /**
+     * 1486. 数组异或操作
+     *
+     * @param n     n
+     * @param start 开始
+     * @return int
+     */
+    public int xorOperation(int n, int start) {
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum ^= (start+2*i);
+        }
+        return sum;
+    }
+
+
+
+
+    /**
+     * 283. 移动零
+     *
+     * @param nums 全国矿工工会
+     */
+    public void moveZeroes(int[] nums) {
+        int length = nums.length;
+        int tmp = 0;
+        for (int i = 0, j = 1; i < length && j < length; i++, j++) {
+
+        }
+    }
+    /**
+     * 421. 数组中两个数的最大异或值
+     *
+     * @param nums 全国矿工工会
+     * @return int
+     */
+    public int findMaximumXOR(int[] nums) {
+        int tmp = 0;
+        for (int i = 0; i < nums.length-1; i++) {
+            for (int j = i+1; j < nums.length; j++) {
+                tmp = Math.max(tmp,nums[i]^nums[j]);
+            }
+        }
+        return tmp;
+    }
     public static void main(String[] args) {
 //        int[] digits = new int[]{1, 1, 2};
 //        String s = "aabcbc";
-        String s = "bg";
-        String s1 = "efjbdfbdgfjhhaiigfhbaejahgfbbgbjagbddfgdiaigdadhcfcj";
-
+        //String s = "bg";
+        //String s1 = "efjbdfbdgfjhhaiigfhbaejahgfbbgbjagbddfgdiaigdadhcfcj";
+        int a = 92;
+        int b = 70;
+        System.out.println(a^b);
 
         //int[][] logs = new int[][]{{0, 10}, {1, 20}};
-        System.out.println(canConstruct(s,s1));
+        //System.out.println(canConstruct(s, s1));
         //System.out.println(hardestWorker(10, logs));
     }
 }
