@@ -289,7 +289,7 @@ public class algo {
     public int missingNumber(int[] nums) {
         int n = nums.length;
         int num = 0;
-        for (int i = 0; i <= n ; i++) {
+        for (int i = 0; i <= n; i++) {
             num ^= i;
         }
         for (int j : nums) {
@@ -308,50 +308,155 @@ public class algo {
     public int xorOperation(int n, int start) {
         int sum = 0;
         for (int i = 0; i < n; i++) {
-            sum ^= (start+2*i);
+            sum ^= (start + 2 * i);
         }
         return sum;
     }
-
-
-
 
     /**
      * 283. 移动零
      *
      * @param nums 全国矿工工会
      */
-    public void moveZeroes(int[] nums) {
-        int length = nums.length;
-        int tmp = 0;
-        for (int i = 0, j = 1; i < length && j < length; i++, j++) {
-
-        }
-    }
-    /**
-     * 421. 数组中两个数的最大异或值
-     *
-     * @param nums 全国矿工工会
-     * @return int
-     */
-    public int findMaximumXOR(int[] nums) {
-        int tmp = 0;
-        for (int i = 0; i < nums.length-1; i++) {
-            for (int j = i+1; j < nums.length; j++) {
-                tmp = Math.max(tmp,nums[i]^nums[j]);
+    public static void moveZeroes(int[] nums) {
+        int index = 0;
+        for (int num : nums) {
+            if (num != 0) {
+                nums[index++] = num;
             }
         }
-        return tmp;
+        for (int i = index; i < nums.length; i++) {
+            nums[i] = 0;
+        }
     }
+
+    /**
+     * 204. 计数质数
+     *
+     * @param n n
+     * @return int
+     */
+    public int countPrimes(int n) {
+        int ans = 0;
+        for (int i = 2; i < n; ++i) {
+            ans += isPrime(i) ? 1 : 0;
+        }
+        return ans;
+    }
+
+    public boolean isPrime(int x) {
+        for (int i = 2; i * i <= x; ++i) {
+            if (x % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int countPrimes1(int n) {
+        boolean[] isPrim = new boolean[n];
+        Arrays.fill(isPrim, true);
+        // 从 2 开始枚举到 sqrt(n)。
+        for (int i = 2; i * i < n; i++) {
+            // 如果当前是素数
+            if (isPrim[i]) {
+                // 就把从 i*i 开始，i 的所有倍数都设置为 false。
+                for (int j = i * i; j < n; j += i) {
+                    isPrim[j] = false;
+                }
+            }
+        }
+        // 计数
+        int cnt = 0;
+        for (int i = 2; i < n; i++) {
+            if (isPrim[i]) {
+                cnt++;
+            }
+        }
+        return cnt;
+    }
+
+    /**
+     * 1009. 十进制整数的反码   476. 数字的补数
+     *
+     * @param n n
+     * @return int
+     */
+    public int bitwiseComplement(int n) {
+        if (n == 0) {
+            return 1;
+        }
+        long ans = 1;
+        int tmp = 0;
+        while (true) {
+            if ((ans << tmp) > n) {
+                break;
+            }
+            tmp++;
+        }
+        return ((int) (ans << tmp) - 1 - n);
+    }
+
+    /**
+     * 1492. n 的第 k 个因子
+     *
+     * @param n n
+     * @param k k
+     * @return int
+     */
+    public int kthFactor(int n, int k) {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            if (n % i == 0) {
+                list.add(i);
+            }
+        }
+        return list.size() < k ? -1 : list.get(k - 1);
+    }
+
+    /**
+     * 2006. 差的绝对值为 K 的数对数目
+     *
+     * @param nums 全国矿工工会
+     * @param k    k
+     * @return int
+     */
+    public int countKDifference(int[] nums, int k) {
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i+1; j < nums.length; j++) {
+                if (nums[i] - nums[j] == k || nums[i] - nums[j] == -k){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 1929. 数组串联
+     *
+     * @param nums 全国矿工工会
+     * @return {@link int[]}
+     */
+    public int[] getConcatenation(int[] nums) {
+        int n = nums.length;
+        int arr[] = new int[n*2];
+        for (int i = 0; i < n; i++) {
+            arr[i] = nums[i];
+            arr[i+n] = arr[i];
+        }
+        return arr;
+    }
+
     public static void main(String[] args) {
-//        int[] digits = new int[]{1, 1, 2};
+        int[] digits = new int[]{0, 1, 0, 3, 12};
 //        String s = "aabcbc";
         //String s = "bg";
         //String s1 = "efjbdfbdgfjhhaiigfhbaejahgfbbgbjagbddfgdiaigdadhcfcj";
         int a = 92;
         int b = 70;
-        System.out.println(a^b);
-
+        moveZeroes(digits);
         //int[][] logs = new int[][]{{0, 10}, {1, 20}};
         //System.out.println(canConstruct(s, s1));
         //System.out.println(hardestWorker(10, logs));
