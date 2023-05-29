@@ -424,8 +424,8 @@ public class algo {
     public int countKDifference(int[] nums, int k) {
         int count = 0;
         for (int i = 0; i < nums.length; i++) {
-            for (int j = i+1; j < nums.length; j++) {
-                if (nums[i] - nums[j] == k || nums[i] - nums[j] == -k){
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[i] - nums[j] == k || nums[i] - nums[j] == -k) {
                     count++;
                 }
             }
@@ -441,12 +441,32 @@ public class algo {
      */
     public int[] getConcatenation(int[] nums) {
         int n = nums.length;
-        int arr[] = new int[n*2];
+        int arr[] = new int[n * 2];
         for (int i = 0; i < n; i++) {
             arr[i] = nums[i];
-            arr[i+n] = arr[i];
+            arr[i + n] = arr[i];
         }
         return arr;
+    }
+
+    /**
+     * 2455. 可被三整除的偶数的平均值
+     *
+     * @param nums 全国矿工工会
+     * @return int
+     */
+    public int averageValue(int[] nums) {
+        int sum = 0, count = 0;
+        for (int num : nums) {
+            if (num % 2 == 0 && num % 3 == 0) {
+                sum += num;
+                count++;
+            }
+        }
+        if (count == 0){
+            return 0;
+        }
+        return sum/count;
     }
 
     public static void main(String[] args) {
