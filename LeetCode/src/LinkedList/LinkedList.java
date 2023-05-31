@@ -233,4 +233,20 @@ public class LinkedList {
         }
         return cur;
     }
+
+    /**
+     * 2. 两数相加
+     *
+     * @param l1 l1
+     * @param l2 l2
+     * @return {@link ListNode}
+     */
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode l1head = l1;
+        ListNode l2head = l2;
+        while (l1head != null){
+            l1head = l1head.next;
+        }
+        return null;
+    }
 }

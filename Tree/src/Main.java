@@ -1,8 +1,3 @@
-import printer.BinaryTrees;
-
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class Main {
     public static void main(String[] args) {
 
@@ -14,8 +9,7 @@ public class Main {
         for (Integer datum : data) {
             bst.add(datum);
         }
-        BinaryTrees.print(bst);
-        System.out.println();
+
         //bst.preOrder();
         //bst.inOrderTraversal();
         //bst.postOrderTraversal();
