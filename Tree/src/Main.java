@@ -1,3 +1,5 @@
+import printer.BinaryTrees;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -5,11 +7,11 @@ public class Main {
                 7, 4, 9, 2, 5, 8, 11, 3, 1
         };
 
-        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        AvlTree<Integer> avlTree = new AvlTree<>();
         for (Integer datum : data) {
-            bst.add(datum);
+            avlTree.add(datum);
         }
-
+        BinaryTrees.print(avlTree);
         //bst.preOrder();
         //bst.inOrderTraversal();
         //bst.postOrderTraversal();

@@ -20,12 +20,10 @@ public class BinaryTree<E> implements BinaryTreeInfo {
         Node<E> left;
         Node<E> right;
         Node<E> parent;
-
         public Node(E element, Node<E> parent) {
             this.element = element;
             this.parent = parent;
         }
-
         public Boolean isLeaf() {
             return left == null && right == null;
         }
@@ -34,6 +32,17 @@ public class BinaryTree<E> implements BinaryTreeInfo {
             return left != null && right != null;
         }
 
+        public Boolean isLeftChild(){
+            return (parent != null) && (this == parent.left);
+        }
+
+        public Boolean isRightChild(){
+            return (parent != null) && (this == parent.right);
+        }
+
+    }
+    protected Node<E> createNode(E element, Node<E> parent){
+        return new Node<>(element,parent);
     }
 
     /**

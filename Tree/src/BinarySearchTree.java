@@ -22,8 +22,9 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
         checkElement(element);
         //添加第一个节点
         if (root == null) {
-            root = new Node<>(element, null);
+            root = createNode(element,null);
             size++;
+            afterAdd(root);
             return;
         }
         //添加非第一个节点
@@ -42,14 +43,17 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
                 return;
             }
         } while (node != null);
-        Node<E> newNode = new Node<>(element, parent);
+        Node<E> newNode = createNode(element, parent);
         if (compare > 0) {
             parent.right = newNode;
         } else {
             parent.left = newNode;
         }
         size++;
+        afterAdd(newNode);
     }
+
+    protected void afterAdd(Node<E> node){}
 
     public void remove(E element) {
         remove(node(element));

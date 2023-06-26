@@ -43,6 +43,85 @@ public class tree {
     }
 
     /**
+     * 700. 二叉搜索树中的搜索
+     *
+     * @param root 根
+     * @param val  瓦尔
+     * @return {@link TreeNode}
+     */
+    public TreeNode searchBST(TreeNode root, int val) {
+        return null;
+    }
+
+    /**
+     * 450. 删除二叉搜索树中的节点
+     *
+     * @param root 根
+     * @param key  关键
+     * @return {@link TreeNode}
+     */
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null) {
+            return null;
+        }
+        if (root.val == key) {
+            if (root.left == null) {
+                return root.right;
+            }
+            if (root.right == null) {
+                return root.left;
+            }
+            TreeNode t = root.left;
+            while (t.right != null) {
+                t = t.right;
+            }
+            t.right = root.right;
+            return root.left;
+        } else if (root.val < key) {
+            root.right = deleteNode(root.right, key);
+        } else {
+            root.left = deleteNode(root.left, key);
+        }
+        return root;
+    }
+
+    /**
+     * 653. 两数之和 IV - 输入二叉搜索树
+     *
+     * @param root 根
+     * @param k    k
+     * @return boolean
+     */
+    public boolean findTarget(TreeNode root, int k) {
+        Deque<TreeNode> queue = new LinkedList<>();
+        List<Integer> list = new ArrayList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            list.add(node.val);
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+        int size = list.size();
+        if (size == 1) {
+            return false;
+        } else {
+            for (int i = 0; i < size - 1; i++) {
+                for (int j = i + 1; j < size; j++) {
+                    if (list.get(i) + list.get(j) == k) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * 104. 二叉树的最大深度
      *
      * @param root 根
@@ -447,27 +526,27 @@ public class tree {
      * @return {@link TreeNode}
      */
     public static TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
-        if(preorder==null || preorder.length==0) {
+        if (preorder == null || preorder.length == 0) {
             return null;
         }
-        if(preorder.length==1) {
+        if (preorder.length == 1) {
             return new TreeNode(preorder[0]);
         }
         TreeNode root = new TreeNode(preorder[0]);
         int n = preorder.length;
-        for(int i=0;i<postorder.length;++i) {
-            if(preorder[1]==postorder[i]) {
+        for (int i = 0; i < postorder.length; ++i) {
+            if (preorder[1] == postorder[i]) {
                 //根据前序数组第二个元素，确定后序数组左子树范围
-                int left_count = i+1;
+                int left_count = i + 1;
                 //拆分前序和后序数组，分成四份 左开右闭
-                int[] pre_left = Arrays.copyOfRange(preorder,1,left_count+1);
-                int[] pre_right = Arrays.copyOfRange(preorder,left_count+1,n);
-                int[] post_left = Arrays.copyOfRange(postorder,0,left_count);
-                int[] post_right = Arrays.copyOfRange(postorder,left_count,n-1);
+                int[] pre_left = Arrays.copyOfRange(preorder, 1, left_count + 1);
+                int[] pre_right = Arrays.copyOfRange(preorder, left_count + 1, n);
+                int[] post_left = Arrays.copyOfRange(postorder, 0, left_count);
+                int[] post_right = Arrays.copyOfRange(postorder, left_count, n - 1);
                 //递归执行前序数组左边、后序数组左边
-                root.left = constructFromPrePost(pre_left,post_left);
+                root.left = constructFromPrePost(pre_left, post_left);
                 //递归执行前序数组右边、后序数组右边
-                root.right = constructFromPrePost(pre_right,post_right);
+                root.right = constructFromPrePost(pre_right, post_right);
                 break;
             }
         }

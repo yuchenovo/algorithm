@@ -463,20 +463,64 @@ public class algo {
                 count++;
             }
         }
-        if (count == 0){
+        if (count == 0) {
             return 0;
         }
-        return sum/count;
+        return sum / count;
+    }
+
+    /**
+     * 2475. 数组中不等三元组的数目
+     *
+     * @param nums 全国矿工工会
+     * @return int
+     */
+    public static int unequalTriplets(int[] nums) {
+        int n = nums.length;
+        int count = 0;
+        for (int i = 0; i <= n - 3; i++) {
+            for (int j = i + 1; j <= n - 2; j++) {
+                if (nums[i] != nums[j]) {
+                    for (int k = j + 1; k < n; k++) {
+                        if (nums[i] != nums[k] && nums[j] != nums[k]) {
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 2485. 找出中枢整数
+     *
+     * @param n n
+     * @return int
+     */
+    public static int pivotInteger(int n) {
+        int sum1 = 0;
+        for (int i = 1; i <= n; i++) {
+            int sum2 = 0;
+            for (int j = i; j <= n; j++) {
+                sum2 = sum2 + j;
+            }
+            sum1 = sum1 + i;
+            if (sum1 == sum2) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public static void main(String[] args) {
-        int[] digits = new int[]{0, 1, 0, 3, 12};
+        int[] digits = new int[]{2, 1, 1};
 //        String s = "aabcbc";
         //String s = "bg";
         //String s1 = "efjbdfbdgfjhhaiigfhbaejahgfbbgbjagbddfgdiaigdadhcfcj";
-        int a = 92;
-        int b = 70;
-        moveZeroes(digits);
+//        int a = 92;
+//        int b = 70;
+        System.out.println(pivotInteger(8));
         //int[][] logs = new int[][]{{0, 10}, {1, 20}};
         //System.out.println(canConstruct(s, s1));
         //System.out.println(hardestWorker(10, logs));
