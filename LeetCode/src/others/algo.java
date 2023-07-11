@@ -2,7 +2,30 @@ package others;
 
 import java.util.*;
 
+/**
+ * 算法
+ *
+ * @author 97557
+ * @date 2023/07/05
+ */
 public class algo {
+    /**
+     * 2600. K 件物品的最大和
+     *
+     * @param numOnes    全国矿工工会
+     * @param numZeros   num 0
+     * @param numNegOnes num底片
+     * @param k          k
+     * @return int
+     */
+    public static int kItemsWithMaximumSum(int numOnes, int numZeros, int numNegOnes, int k) {
+        if (k <= numOnes){
+            return k;
+        }else if (k <= numOnes+numZeros){
+            return numOnes;
+        }
+        return numOnes - (k-numOnes-numZeros);
+    }
     /**
      * 2413. 最小偶倍数
      *
@@ -514,13 +537,13 @@ public class algo {
     }
 
     public static void main(String[] args) {
-        int[] digits = new int[]{2, 1, 1};
+        //int[] digits = new int[]{2, 1, 1};
 //        String s = "aabcbc";
         //String s = "bg";
         //String s1 = "efjbdfbdgfjhhaiigfhbaejahgfbbgbjagbddfgdiaigdadhcfcj";
 //        int a = 92;
 //        int b = 70;
-        System.out.println(pivotInteger(8));
+        System.out.println(kItemsWithMaximumSum(3,3,3,7));
         //int[][] logs = new int[][]{{0, 10}, {1, 20}};
         //System.out.println(canConstruct(s, s1));
         //System.out.println(hardestWorker(10, logs));

@@ -3,6 +3,7 @@ package Tree;
 import javafx.util.Pair;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class tree {
@@ -43,6 +44,274 @@ public class tree {
     }
 
     /**
+     * 99. 恢复二叉搜索树
+     *
+     * @param root 根
+     */
+    public void recoverTree(TreeNode root) {
+
+    }
+    /**
+     * 671. 二叉树中第二小的节点
+     *
+     * @param root 根
+     * @return int
+     */
+    public int findSecondMinimumValue(TreeNode root) {
+        Deque<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        List<Integer> list = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+            if (node.left == null && node.right == null) {
+                list.add(node.val);
+            }
+        }
+        List<Integer> collect = list.stream().distinct().sorted().collect(Collectors.toList());
+        if (collect.size() < 2){
+            return -1;
+        }
+        return collect.get(1);
+    }
+
+    /**
+     * 230. 二叉搜索树中第K小的元素
+     *
+     * @param root 根
+     * @param k    k
+     * @return int
+     */
+    public int kthSmallest(TreeNode root, int k) {
+        List<Integer> list = new ArrayList<>();
+        inorder(root, list);
+        return list.get(k - 1);
+    }
+
+    /**
+     * 236. 二叉树的最近公共祖先
+     *
+     * @param root 根
+     * @param p    p
+     * @param q    问
+     * @return {@link TreeNode}
+     */
+    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) {
+            return root;
+        }
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (left == null) {
+            return right;
+        }
+        if (right == null) {
+            return left;
+        }
+        return root;
+    }
+
+    /**
+     * 235. 二叉搜索树的最近公共祖先
+     *
+     * @param root 根
+     * @param p    p
+     * @param q    问
+     * @return {@link TreeNode}
+     */
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        TreeNode ancestor = root;
+        while (true) {
+            if (p.val < ancestor.val && q.val < ancestor.val) {
+                ancestor = ancestor.left;
+            } else if (p.val > ancestor.val && q.val > ancestor.val) {
+                ancestor = ancestor.right;
+            } else {
+                break;
+            }
+        }
+        return ancestor;
+    }
+
+    /**
+     * 938. 二叉搜索树的范围和
+     *
+     * @param root 根
+     * @param low  低
+     * @param high 高
+     * @return int
+     */
+    public int rangeSumBST(TreeNode root, int low, int high) {
+        Deque<TreeNode> stack = new LinkedList<>();
+        int count = 0;
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            if (low <= root.val && root.val <= high) {
+                count += root.val;
+            }
+            root = root.right;
+        }
+        return count;
+    }
+
+    /**
+     * 108. 将有序数组转换为二叉搜索树
+     *
+     * @param nums 全国矿工工会
+     * @return {@link TreeNode}
+     */
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return helper(nums, 0, nums.length - 1);
+    }
+
+    public TreeNode helper(int[] nums, int left, int right) {
+        if (left > right) {
+            return null;
+        }
+        int mid = (left + right) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = helper(nums, left, mid - 1);
+        root.right = helper(nums, mid + 1, right);
+        return root;
+    }
+
+    /**
+     * 530. 二叉搜索树的最小绝对差
+     *
+     * @param root 根
+     * @return int
+     */
+    public int getMinimumDifference(TreeNode root) {
+        Deque<TreeNode> stack = new LinkedList<>();
+        int tmp = 100000;
+        int inorder = -1;
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            if (inorder != -1) {
+                tmp = Math.min(tmp, root.val - inorder);
+            }
+            inorder = root.val;
+            root = root.right;
+        }
+//        private void method(TreeNode node){
+//            if (node == null){
+//                return;
+//            }
+//            method(node.left);
+//            if (inorder != -1) {
+//                tmp = Math.min(tmp, node.val - inorder);
+//            }
+//            inorder = root.val;
+//            method(node.right);
+//        }
+        return tmp;
+    }
+
+
+    /**
+     * 98. 验证二叉搜索树
+     *
+     * @param root 根
+     * @return boolean
+     */
+    public static boolean isValidBST(TreeNode root) {
+        TreeNode node = root;
+        Queue<TreeNode> leftQueue = new LinkedList<>();
+        Queue<TreeNode> rightQueue = new LinkedList<>();
+        if (node.left != null) {
+            leftQueue.offer(node.left);
+            while (!leftQueue.isEmpty()) {
+                TreeNode leftNode = leftQueue.poll();
+                if (leftNode.val >= node.val) {
+                    return false;
+                }
+                if (leftNode.left != null) {
+                    leftQueue.offer(leftNode.left);
+                }
+                if (leftNode.right != null) {
+                    leftQueue.offer(leftNode.right);
+                }
+            }
+            if (node.left.val < node.val) {
+                boolean validBST = isValidBST(node.left);
+                if (!validBST) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        if (node.right != null) {
+            rightQueue.offer(node.right);
+            while (!rightQueue.isEmpty()) {
+                TreeNode rightNode = rightQueue.poll();
+                if (rightNode.val <= node.val) {
+                    return false;
+                }
+                if (rightNode.left != null) {
+                    rightQueue.offer(rightNode.left);
+                }
+                if (rightNode.right != null) {
+                    rightQueue.offer(rightNode.right);
+                }
+            }
+            if (node.right.val > node.val) {
+                boolean validBST = isValidBST(node.right);
+                if (!validBST) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 701. 二叉搜索树中的插入操作
+     *
+     * @param root 根
+     * @param val  瓦尔
+     * @return {@link TreeNode}
+     */
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (root == null) {
+            root = new TreeNode(val);
+            return root;
+        }
+        //添加非第一个节点
+        TreeNode node = root;
+        TreeNode parent = root;
+        do {
+            parent = node;
+            if (val > node.val) {
+                node = node.right;
+            } else {
+                node = node.left;
+            }
+        } while (node != null);
+        if (val > parent.val) {
+            parent.right = new TreeNode(val);
+        } else {
+            parent.left = new TreeNode(val);
+        }
+        return root;
+    }
+
+    /**
      * 700. 二叉搜索树中的搜索
      *
      * @param root 根
@@ -50,6 +319,17 @@ public class tree {
      * @return {@link TreeNode}
      */
     public TreeNode searchBST(TreeNode root, int val) {
+        TreeNode node = root;
+        while (node != null) {
+            if (val == node.val) {
+                return node;
+            }
+            if (val > node.val) {
+                node = node.right;
+            } else {
+                node = node.left;
+            }
+        }
         return null;
     }
 

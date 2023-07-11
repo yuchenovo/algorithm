@@ -1,7 +1,5 @@
 import Tree.tree;
 
-import static Tree.tree.constructFromPrePost;
-
 public class test {
 
 
@@ -15,15 +13,17 @@ public class test {
 //        for (int i = 0; i < nums.length; i++) {
 //            System.out.println(nums[indices[i]]);
 //        }
-//        tree.TreeNode node = new tree.TreeNode(1);
-//        node.left = new tree.TreeNode(2);
-//        node.right = new tree.TreeNode(3);
-//        node.left.left = new tree.TreeNode(4);
-//        node.left.right = new tree.TreeNode(5);
-        int[] preorder = new int[]{2,1};
-        int[] postorder = new int[]{1,2};
-        //node.right.right = new tree.TreeNode(6);
-        //System.out.println(minDepth(node));
-        constructFromPrePost(preorder,postorder);
+//        tree.TreeNode node = new tree.TreeNode(32);
+//        node.left = new tree.TreeNode(26);
+//        node.right = new tree.TreeNode(47);
+//        node.left.left = new tree.TreeNode(19);
+//        node.right.right = new tree.TreeNode(56);
+//        node.left.left.right = new tree.TreeNode(27);
+        int[] preorder = new int[]{-10,-3,0,5,9};
+//        int[] postorder = new int[]{1,2};
+//        //node.right.right = new tree.TreeNode(6);
+//        //System.out.println(minDepth(node));
+//        constructFromPrePost(preorder,postorder);
+//        tree.isValidBST(node);
     }
 }
