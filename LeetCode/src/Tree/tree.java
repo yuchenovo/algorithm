@@ -51,6 +51,16 @@ public class tree {
     public void recoverTree(TreeNode root) {
 
     }
+
+    /**
+     * 2236. 判断根结点是否等于子结点之和
+     *
+     * @param root 根
+     * @return boolean
+     */
+    public boolean checkTree(TreeNode root) {
+        return root.val == (root.left.val + root.right.val);
+    }
     /**
      * 671. 二叉树中第二小的节点
      *

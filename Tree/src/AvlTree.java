@@ -99,18 +99,18 @@ public class AvlTree<E> extends BinarySearchTree<E> {
     /**
      * 左旋转
      *
-     * @param node 节点
+     * @param grand 节点
      */
-    private void rotateLeft(Node<E> node) {
+    private void rotateLeft(Node<E> grand) {
 
     }
 
     /**
      * 向右旋转
      *
-     * @param node 节点
+     * @param grand 节点
      */
-    private void rotateRight(Node<E> node) {
+    private void rotateRight(Node<E> grand) {
 
     }
 
@@ -134,6 +134,7 @@ public class AvlTree<E> extends BinarySearchTree<E> {
                 updateHeight(node);
             } else {
                 reBalance(node);
+                break;
             }
         }
     }
