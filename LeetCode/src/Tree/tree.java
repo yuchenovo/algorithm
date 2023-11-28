@@ -48,8 +48,35 @@ public class tree {
      *
      * @param root 根
      */
-    public void recoverTree(TreeNode root) {
+    //第一个最大值节点
+    TreeNode firstMax = null;
+    //最后一个最小值节点
+    TreeNode lastMin = null;
+    //前一个节点
+    TreeNode prev = new TreeNode(Integer.MIN_VALUE);
 
+    public void recoverTree(TreeNode root) {
+        inOrder(root);
+        if (firstMax != null && lastMin != null) {
+            int tmp = firstMax.val;
+            firstMax.val = lastMin.val;
+            lastMin.val = tmp;
+        }
+    }
+
+    private void inOrder(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        inOrder(root.left);
+        if (root.val < prev.val) {
+            lastMin = root;
+            if (firstMax == null) {
+                firstMax = prev;
+            }
+        }
+        prev = root;
+        inOrder(root.right);
     }
 
     /**
@@ -61,6 +88,7 @@ public class tree {
     public boolean checkTree(TreeNode root) {
         return root.val == (root.left.val + root.right.val);
     }
+
     /**
      * 671. 二叉树中第二小的节点
      *
@@ -84,7 +112,7 @@ public class tree {
             }
         }
         List<Integer> collect = list.stream().distinct().sorted().collect(Collectors.toList());
-        if (collect.size() < 2){
+        if (collect.size() < 2) {
             return -1;
         }
         return collect.get(1);

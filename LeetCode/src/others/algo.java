@@ -2,7 +2,6 @@ package others;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * 算法
@@ -467,7 +466,7 @@ public class algo {
      */
     public int[] getConcatenation(int[] nums) {
         int n = nums.length;
-        int arr[] = new int[n * 2];
+        int[] arr = new int[n * 2];
         for (int i = 0; i < n; i++) {
             arr[i] = nums[i];
             arr[i + n] = arr[i];
@@ -723,6 +722,7 @@ public class algo {
 
     /**
      * 2586. 统计范围内的元音字符串数
+     *
      * @param words
      * @param left
      * @param right
@@ -733,8 +733,8 @@ public class algo {
         for (int i = left; i <= right; i++) {
             char c = words[i].charAt(0);
             char c1 = words[i].charAt(words[i].length() - 1);
-            if ((c == 'a' || c == 'e' ||c == 'i' ||c == 'o' ||c == 'u')&&
-                    (c1 == 'a' || c1 == 'e' ||c1 == 'i' ||c1 == 'o' ||c1 == 'u')){
+            if ((c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') &&
+                    (c1 == 'a' || c1 == 'e' || c1 == 'i' || c1 == 'o' || c1 == 'u')) {
                 count++;
             }
         }
@@ -762,11 +762,224 @@ public class algo {
      * @return int
      */
     public int maxScore(String s) {
-        return 0;
+        int ans = 0;
+        int n = s.length();
+        for (int i = 1; i < n; i++) {
+            int score = 0;
+            for (int j = 0; j < i; j++) {
+                if (s.charAt(j) == '0') {
+                    score++;
+                }
+            }
+            for (int j = i; j < n; j++) {
+                if (s.charAt(j) == '1') {
+                    score++;
+                }
+            }
+            ans = Math.max(ans, score);
+        }
+        return ans;
     }
+
+    /**
+     * 263. 丑数
+     *
+     * @param n n
+     * @return boolean
+     */
+    public boolean isUgly(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        int[] factors = {2, 3, 5};
+        for (int factor : factors) {
+            while (n % factor == 0) {
+                n /= factor;
+            }
+        }
+        return n == 1;
+    }
+
+    /**
+     * 1768. 交替合并字符串
+     *
+     * @param word1 word1
+     * @param word2 word2
+     * @return {@link String}
+     */
+    public String mergeAlternately(String word1, String word2) {
+        int length1 = word1.length();
+        int length2 = word2.length();
+        int tmp = 0;
+        if (length1 > length2) {
+            tmp = 1;
+        } else if (length1 < length2) {
+            tmp = -1;
+        }
+        int length = Math.min(length1, length2);
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            builder.append(word1.charAt(i));
+            builder.append(word2.charAt(i));
+        }
+        if (tmp == 1) {
+            builder.append(word1.substring(length));
+        } else if (tmp == -1) {
+            builder.append(word2.substring(length));
+        }
+        return builder.toString();
+    }
+
+    /**
+     * 389. 找不同
+     *
+     * @param s 年代
+     * @param t t
+     * @return char
+     */
+    public char findTheDifference(String s, String t) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
+        }
+        for (int i = 0; i < t.length(); i++) {
+            char c = t.charAt(i);
+            map.put(c, map.getOrDefault(c, 0) - 1);
+            if (map.get(c) < 0) {
+                return c;
+            }
+        }
+        return ' ';
+    }
+
+    /**
+     * 28. 找出字符串中第一个匹配项的下标
+     *
+     * @param haystack 干草堆
+     * @param needle   针
+     * @return int
+     */
+    public static int strStr(String haystack, String needle) {
+        if (haystack.equals(needle)) {
+            return 0;
+        }
+        int nLength = needle.length();
+        int hLength = haystack.length();
+        for (int i = 0; i <= hLength - nLength; i++) {
+            String s = haystack.substring(i, i + nLength);
+            if (s.equals(needle)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 242. 有效的字母异位词
+     *
+     * @param s 年代
+     * @param t t
+     * @return boolean
+     */
+    public boolean isAnagram(String s, String t) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
+        }
+        for (int i = 0; i < t.length(); i++) {
+            map.put(t.charAt(i), map.getOrDefault(t.charAt(i), 0) - 1);
+            if (map.get(t.charAt(i)) < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 771. 宝石与石头
+     *
+     * @param jewels 珠宝
+     * @param stones 石头
+     * @return int
+     */
+    public int numJewelsInStones(String jewels, String stones) {
+        int j = jewels.length();
+        int s = stones.length();
+        int count = 0;
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < j; i++) {
+            char c = jewels.charAt(i);
+            map.put(c, 1);
+        }
+        for (int i = 0; i < s; i++) {
+            char sc = stones.charAt(i);
+            if (map.containsKey(sc)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 2500. 删除每行中的最大值
+     *
+     * @param grid 网格
+     * @return int
+     */
+    public static int deleteGreatestValue(int[][] grid) {
+        int sum = 0, n = grid[0].length;
+        for (int[] ints : grid) {
+            Arrays.sort(ints);
+        }
+        for (int j = 0; j < n; j++) {
+            int mx = 0;
+            for (int[] ints : grid) {
+                mx = Math.max(mx, ints[j]);
+            }
+            sum += mx;
+        }
+        return sum;
+    }
+
+    /**
+     * 459. 重复的子字符串
+     *
+     * @param s 年代
+     * @return boolean
+     */
+    public static boolean repeatedSubstringPattern(String s) {
+        String str = s+s;
+        str = str.substring(1,str.length() - 1);
+        return str.contains(s);
+    }
+
+    /**
+     * 2562. 找出数组的串联值
+     * @param nums 数组
+     * @return long
+     */
+    public static long findTheArrayConcVal(int[] nums) {
+        long sum = 0;
+        for (int i = 0,size = nums.length - 1; i <= size ; i++,size--) {
+            if (i != size){
+                sum += Integer.parseInt(String.valueOf(nums[i]) + nums[size]);
+            }else {
+                sum += nums[i];
+            }
+        }
+        return sum;
+    }
+
     public static void main(String[] args) {
-        int[] digits = new int[]{1,2,6,3,0,7,1,7,1,9,7,5,6,6,4,4,0,0,6,3};
+        int[] digits = new int[]{1,78,27,48,14,86,79,68,77,20,57,21,18,67,5,51,70,85,47,56,22,79,41,8,39,81,59,74,14,45,49,15,10,28};
+        String a = "abc";
+        String b = "c";
+        //strStr(a, b);
         //String[] words = new String[]{"vo","j","i","s","i"};
-        //int[][] logs = new int[][]{{0, 10, 20}, {1, 20, 30}};
+        int[][] logs = new int[][]{{10, 20, 0}, {1, 20, 30}};
+//        boolean b1 = repeatedSubstringPattern(a);
+//        long theArrayConcVal = findTheArrayConcVal(digits);
+//        System.out.println(theArrayConcVal);
+        deleteGreatestValue(logs);
     }
 }
