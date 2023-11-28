@@ -1,5 +1,8 @@
 package LinkedList;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 237 删除链表中的节点
  *
@@ -43,6 +46,27 @@ public class LinkedList {
         ListNode node = addTwoNumbers(l1, l2);
     }
 
+    /**
+     * LCR 123. 图书整理 I
+     * @param head
+     * @return {@link int[]}
+     */
+    List<Integer> list = new ArrayList<>();
+    public int[] reverseBookList(ListNode head) {
+        reverse(head);
+        int[] res = new int[list.size()];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = list.get(i);
+        }
+        return res;
+    }
+    void reverse(ListNode head){
+        if (head == null){
+            return;
+        }
+        reverse(head.next);
+        list.add(head.val);
+    }
     /**
      * 876. 链表的中间结点
      * 快慢指针
